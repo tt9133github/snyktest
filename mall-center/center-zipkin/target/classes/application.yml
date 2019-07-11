@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: center-zipkin
+  security:
+    user:
+      name: admin
+      password: 123456
+  profiles:
+    active: dev
+
+server:
+  port: 8103
+
+
+management:
+#zipkin启动报错无法访问的解决方法
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
+  security:
+    enabled: false #关闭验证
+info: #/info请求的显示信息
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0
+  build:
+    artifactId: center-zipkin
+    version: 1.0-SNAPSHOT
+
+---
+spring:
+  profiles: dev
+
+eureka:
+  client:
+    serviceUrl:
+      #defaultZone: http://39.96.114.250:8100/eureka/
+      defaultZone: ${EUREKA_SERVICE_URL:http://127.0.0.1:8100}/eureka/
+
+---
+spring:
+  profiles: prod
+
+eureka:
+  client:
+    serviceUrl:
+      #defaultZone: http://39.96.114.250:8100/eureka/
+      defaultZone: ${EUREKA_SERVICE_URL:http://192.168.1.221:8100}/eureka/
+
+
