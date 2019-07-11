@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>源代码分析系统| 登录</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="common/bootstrap/css/bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="common/dist/css/AdminLTE.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="common/plugins/iCheck/square/blue.css">
+
+    <link rel="stylesheet" href="app/index/assets/css/login.css" />
+    <!--添加分页表格的css -->
+    <!--    <link rel="stylesheet" src="app/index/assets/css/bootsrap.min.css" />-->
+    <!-- Font Awesome -->
+
+    <!-- Theme style -->
+    <!--    <link rel="stylesheet" href="common/dist/css/AdminLTE.min.css">-->
+    <!-- iCheck -->
+    <!--    <link rel="stylesheet" href="common/plugins/iCheck/square/blue.css">-->
+    <style type="text/css">
+        /*
+        .login-page {
+                        background-image: url(common/dist/img/background.jpg);
+            background-position: center;
+            background-repeat: no-repeat;
+            color: rgba(255, 255, 255, 0.65);
+        }
+*/
+
+        .head-style {
+            /*            background: url(../../common/img/background/login_bg_6.png) top left repeat-x;*/
+            background-color: #2D5B88;
+            width: 100%;
+            min-width: 1008px;
+            height: 100%;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            overflow: scroll;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu;
+        }
+
+        .login-page {
+            background-image: url(/app/index/images/4.jpeg);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: rgba(255, 255, 255, 0.65);
+        }
+        /*
+        和主页一致，渐变色背景
+        .login-style {
+            background-color: #3e6e8a;
+            color: rgba(255, 255, 255, 0.65);
+            background-image: url(/app/index/assets/css/images/overlay.png), linear-gradient(to top, #539bc5 5%, #5f4d93 85%);
+        }
+*/
+
+        .lg-container {
+            width: 550px;
+            margin-top: 250px;
+            margin-left: -50px;
+            padding: 20px 20px;
+            border: 1px solid #f4f4f4;
+            background: rgba(255, 255, 255, .5);
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            -webkit-box-shadow: 0 0 2px #aaa;
+            -moz-box-shadow: 0 0 2px #aaa;
+        }
+
+        .login-box-msg {
+            font-size: 16px;
+            color: white;
+        }
+
+        .color-white {
+            color: white;
+        }
+
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="head-style">
+    <div class="login-box">
+
+        <!-- /.login-logo -->
+        <div class="login-box-body lg-container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="index.html"><img src="app/index/images/logo-2.png" style="width:100px;"></a>
+                </div>
+                <div class="col-md-9 color-white">
+                    <h2>代码成份安全检测平台</h2>
+                    <p> Code component security detection platform</p>
+                </div>
+            </div>
+
+            <!--            <b><p class="login-box-msg" style="font-size:20px;">登&nbsp;&nbsp;录</p></b>-->
+            <br>
+            <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="用户名" id="username">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="password" class="form-control" placeholder="密码" id="password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <select class="form-control" id="usertype">
+                  <option value="0">系统管理员</option>
+                  <option value="1">企业用户</option>
+                  <option value="2">一般用户</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-5">
+                        <input type="text" class="form-control" placeholder="验证码" id="captcha2">
+                    </div>
+                    <div class="col-md-4">
+                        <img src="/api/user/captcha" id="captcha" alt="captcha" style="height:32px;">
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-block" onclick="reloadCaptcha()" id="refresh" style="cursor:pointer;height:32px;">更新</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-12">
+                    <button onclick="login()" class="btn btn-primary btn-block btn-flat">登录</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </div>
+        <!-- /.login-box-body -->
+    </div>
+    <br>
+    <!--
+    <div class="col-md-6 col-md-offset-3">
+         /.login-box
+        <ul class="statistics" style="font-size:16px;">
+            <li class="style1">
+                <span class="icon fa-code-fork"></span>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;20+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> 语言支持
+            </li>
+            <li class="style2 style-width">
+                <span class="icon fa-folder-open-o"></span>
+                <strong>2,436,000+</strong> 开源项目
+            </li>
+
+            <li class="style4 style-width">
+                <span class="icon fa-laptop"></span>
+                <strong>&nbsp;&nbsp;42,000+&nbsp;&nbsp;</strong> 安全风险
+            </li>
+
+            <li class="style5 style-width">
+                <span class="icon fa-laptop"></span>
+                <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;80+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> 开源许可证
+            </li>
+
+        </ul>
+    </div>
+-->
+    <!-- jQuery 2.2.3 -->
+    <script type="text/javascript" src="common/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <!-- Bootstrap 3.3.6 -->
+    <script type="text/javascript" src="common/bootstrap/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script type="text/javascript" src="common/plugins/iCheck/icheck.min.js"></script>
+
+    <script>
+        $(function() {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%' // optional
+            });
+        });
+
+        function reloadCaptcha() {
+            document.getElementById('captcha').src = document.getElementById('captcha').src + '?' + new Date();
+        }
+
+        function login() {
+
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var captcha = document.getElementById("captcha2").value;
+            //获取选中的user类型
+            var obj = document.getElementById("usertype"); //定位id
+            var index = obj.selectedIndex; // 选中索引
+            var usertype = obj.options[index].value; // 选中值
+            console.log(usertype);
+            var param = {
+                'username': username,
+                'password': password,
+                'type': usertype,
+                'captcha': captcha,
+
+            };
+            $.ajax({
+                type: 'POST',
+                dataType: "json",
+                url: '/api/user/login',
+                cache: false,
+                data: param,
+                success: function(data) {
+                    if (data.status == 0) {
+                        if (data.info.type == 0) {
+                            window.location.href = "user.html#!/user-manage";
+                        } else {
+                            window.location.href = "user.html#!/";
+                        }
+                    } else if (data.status == 1) {
+                        if (data.info == "captcha  is incorrect.") {
+                            alert("验证码错误，请重新输入！");
+                            document.getElementById("captcha2").value = '';
+                        } else {
+                            alert("用户名或密码错误,请重试！");
+                            document.location.reload();
+                            document.getElementById("captcha2").value = '';
+                        }
+                    } else if (data.status == -1) {
+                        alert("该用户已禁用，请联系系统管理员更改用户状态！");
+                    } else if (data.status == -2) {
+                        alert("用户类型选择错误，请重新选择！");
+                    } else if (data.status == -3) {
+                        alert("用户已过期，请联系厂商！");
+                    }
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+
+        };
+
+        document.onkeyup = function(event) {
+            if (event.keyCode == 13) {
+                login();
+            }
+        };
+
+    </script>
+</body>
+
+</html>
